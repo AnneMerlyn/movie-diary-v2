@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { getPopularMovies } from '../data/tmdb';
-import MovieCard from '../components/MovieCard';
+import { getPopularMovies } from "../data/tmdb";
+import MovieCard from "../components/MovieCard";
+import { Link } from "react-router";
 
 const Home = () => {
     const [movies, setMovies] = useState([]);
+
     useEffect(() => {
         let ignore = false;
         (async () => {
@@ -23,12 +25,14 @@ const Home = () => {
             ignore = true;
         };
     }, []);
+
     return (
-        <div className='mx-auto w-full'>
-            <h1 className='text-center my-4 text-6xl'>React Movie Diary</h1>
-            <div className='p-4 grid grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]  gap-6 justify-center'>
+        <div className="mx-auto w-full">
+            <div className="p-4 grid grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]  gap-6 justify-center">
                 {movies.map((movie) => (
-                    <MovieCard key={movie.id} {...movie} />
+                    <Link key={movie.id} to={`details/${movie.id}`}>
+                        <MovieCard {...movie} />
+                    </Link>
                 ))}
             </div>
         </div>
